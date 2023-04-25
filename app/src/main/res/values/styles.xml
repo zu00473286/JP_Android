@@ -1,0 +1,73 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TextViewStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="NumViewStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="TextView_MiniTxt_Style">
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="TextView_MiniNum_Style">
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="EdTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="EdMiniTextStyle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="EdTextStyleForLines1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:lines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="EdTextStyleForMoreLines">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="BtnStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/edittext_textcolor</item>
+    </style>
+
+    <style name="RadioStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CheckBoxStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

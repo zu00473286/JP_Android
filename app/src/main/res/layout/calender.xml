@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_margin="40dp"
+    tools:context="com.apologize.js.Base.Calender">
+
+
+    <CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:focusedMonthDateColor="#ffa500"
+        android:unfocusedMonthDateColor="#ffc0c0c0"
+        android:showWeekNumber="false"
+        android:selectedWeekBackgroundColor="#00000000"
+        android:weekSeparatorLineColor="#000"
+        android:id="@+id/calendarView"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="確定"
+            android:onClick="onConfirm"
+            style="@style/BtnStyle" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="取消"
+            android:onClick="onReCall"
+            style="@style/BtnStyle"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="App_Menu_Function_margin">10dp</dimen>
+    <dimen name="App_Menu_Function_TxtSize">30sp</dimen>
+    <dimen name="Mini_Function_Size">40dp</dimen>
+
+    <color name="dimgray">#696969</color>
+    <color name="menu_imgbtn_tran">#3000</color>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

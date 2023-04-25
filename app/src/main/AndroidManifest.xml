@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.apologize.js_app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_jplogo_1024pt"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:exported="true"
+            android:name=".APP_Strat"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CheckInWork.Authority.CheckinAuthorityLoginView"/>
+        <activity android:name=".CheckInWork.Authority.CheckinAuthoritySetView"/>
+        <activity android:name=".Base.JP_Search_View"/>
+        <activity android:name=".CheckInWork.PersonalAttendance.SearchResultDetail"/>
+        <activity android:name=".CheckInWork.PersonalAttendance.SearchCondition"/>
+        <activity android:name=".CheckInWork.Attendance.EmployeAttendance_Search"/>
+        <activity android:name=".CheckInWork.Attendance.EmployeAttendanceCondition"/>
+        <activity android:name=".CheckInWork.Attendance.EmployeAttendanceResult"/>
+        <activity android:name=".CheckInWork.Leave.Leave_Search_View"/>
+        <activity android:name=".CheckInWork.Jiaban.Jiaban_Search_View"/>
+        <activity android:name=".CheckInWork.Leave.LeaveAudit"/>
+        <activity android:name=".CheckInWork.Leave.LeaveAuditCondition"/>
+        <activity android:name=".CheckInWork.Jiaban.JiabanAuditCondition"/>
+        <activity android:name=".CheckInWork.Leave.LeaveAuditSearchView"/>
+        <activity android:name=".CheckInWork.Jiaban.JiabanAuditSearchView"/>
+        <activity android:name=".CheckInWork.Leave.LeaveMenu"/>
+        <activity android:name=".CheckInWork.Jiaban.JiabanMenu"/>
+        <activity android:name=".Base.Search_View"/>
+        <activity android:name=".CheckInWork.Leave.LeaveRequest"/>
+        <activity android:name=".CheckInWork.Leave.LeaveSearchResult"/>
+        <activity android:name=".CheckInWork.Jiaban.JiabanSearchResult"/>
+        <activity android:name=".CheckInWork.Leave.LeaveSearchCondition"/>
+        <activity android:name=".CheckInWork.Jiaban.JiabanRequest"/>
+        <activity android:name=".CheckInWork.Jiaban.JiabanSearchCondition"/>
+        <activity android:name=".Base.DrawBoard"/>
+        <activity android:name=".Base.Calender" />
+        <activity android:name=".Base.SearchPage" />
+        <activity
+            android:name=".Base.SendReport"
+            android:label="@string/title_activity_send_report" />
+        <activity
+            android:name=".Base.SendReport_OpenHeader"
+            android:label="@string/title_activity_send_report__open_header" />
+        <activity
+            android:name=".Base.SendReport_OpenFooder"
+            android:label="@string/title_activity_send_report__open_fooder" />
+        <activity android:name=".APP_JPServerLogIn" />
+        <activity android:name=".APP_CheckIn" />
+        <activity android:name=".APP_JPMenu" />
+        <activity android:name=".CheckInWork.CheckInWorkMenu" />
+        <activity android:name=".CheckInWork.SetCheckInButton"></activity>
+    </application>
+
+</manifest>

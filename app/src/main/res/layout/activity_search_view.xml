@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/app_bg_b"
+    tools:context="com.example.leo.ci_app.Base.Search_View">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linear"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客戶名稱"
+            android:layout_marginRight="5dp"
+            style="@style/TextViewStyle"
+            android:id="@+id/tvItem" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            style="@style/EdTextStyleForLines1"
+            android:id="@+id/edItem" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button_background"
+            android:id="@+id/searchBtn"
+            style="@style/BtnStyle"
+            android:onClick="onSearch"
+            android:text="查詢"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
+            android:id="@+id/rmNewConditionListView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
+            android:gravity="center_horizontal"
+            android:text="Small Text"
+            android:id="@+id/textView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:layout_height="40dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/prev"
+            android:onClick="onPageUp"
+            android:id="@+id/rmNewConditionBtnPrev" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            style="@style/TextViewStyle"
+            android:background="@drawable/button_background"
+            android:text="返回前一頁"
+            android:onClick="onBack"
+            android:id="@+id/rmNewConditionBtnCancel" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/next"
+            android:onClick="onPageDown"
+            android:id="@+id/rmNewConditionBtnNext" />
+    </LinearLayout>
+
+</LinearLayout>
