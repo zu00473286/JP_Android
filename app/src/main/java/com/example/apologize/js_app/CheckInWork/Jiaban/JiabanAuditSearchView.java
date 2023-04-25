@@ -13,7 +13,8 @@ import android.widget.TextView;
 import com.example.apologize.js_app.Base.BaseActivity;
 import com.example.apologize.js_app.Base.Common;
 import com.example.apologize.js_app.CheckInWork.Leave.LeaveAudit;
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+//import com.example.apologize.js_app.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,7 +144,7 @@ public class JiabanAuditSearchView extends BaseActivity {
                         Bundle b = new Bundle();
                         b.putString("Jid",maps.get(position).get("Jid").toString());
                         i.putExtras(b);
-                        i.setClass(JiabanAuditSearchView.this, LeaveAudit.class);
+                        i.setClass(JiabanAuditSearchView.this, JiabanAudit.class);
                         startActivityForResult(i,1);
                     }
                 });

@@ -1,15 +1,12 @@
 package com.example.apologize.js_app.CheckInWork.Leave;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -17,11 +14,12 @@ import android.provider.MediaStore;
 import androidx.appcompat.app.ActionBar;
 //import android.support.v7.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,7 +29,8 @@ import com.example.apologize.js_app.Base.Common;
 import com.example.apologize.js_app.Base.DBSearch;
 import com.example.apologize.js_app.Base.DrawBoard;
 import com.example.apologize.js_app.Base.NetWork;
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+//import com.example.apologize.js_app.R;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.http.NameValuePair;
@@ -41,12 +40,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by leo on 2017/11/15.
@@ -159,18 +156,21 @@ public class LeaveAudit extends BaseActivity {
                         dialog.dismiss();
                         try {
 
-                            for (int i = 0; i < dbSearch.dateArray.length(); i++) {
-                                JSONObject object = dbSearch.dateArray.getJSONObject(i);
-                                t1.setText(object.get("employeid").toString());
-                                t2.setText(object.get("employename").toString());
-                                t3.setText(object.getString("absencename"));
-                                t4.setText(dateToText(object.get("udate").toString()) + " " + timeToText(object.get("uontime").toString()));
-                                t5.setText(dateToText(object.get("yndate").toString()) + " " + timeToText(object.get("ynofftime").toString()));
-                                t6.setText(object.get("qjmemo").toString());
-                                t7.setText(dateToText(object.get("qjdate").toString()));
-                                Common.absenceno = object.get("absenceno").toString();
+                            if (dbSearch.dateArray != null) {
+                                for (int i = 0; i < dbSearch.dateArray.length(); i++) {
+                                    JSONObject object = dbSearch.dateArray.getJSONObject(i);
+                                    t1.setText(object.get("employeid").toString());
+                                    t2.setText(object.get("employename").toString());
+                                    t3.setText(object.getString("absencename"));
+                                    t4.setText(dateToText(object.get("udate").toString()) + " " + timeToText(object.get("uontime").toString()));
+                                    t5.setText(dateToText(object.get("yndate").toString()) + " " + timeToText(object.get("ynofftime").toString()));
+                                    t6.setText(object.get("qjmemo").toString());
+                                    t7.setText(dateToText(object.get("qjdate").toString()));
+                                    Common.absenceno = object.get("absenceno").toString();
+                                }
+                            }else {
+                                // handle null case
                             }
-
                         } catch (JSONException e) {
                             Log.d("error", e.getMessage());
                         }
@@ -199,8 +199,8 @@ public class LeaveAudit extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        menu.findItem(R.id.item1).setTitle(Common.toLanguage("上傳圖片"));
-        menu.findItem(R.id.item2).setTitle(Common.toLanguage("手繪簽名"));
+//        menu.findItem(R.id.item1).setTitle(Common.toLanguage("上傳圖片"));
+//        menu.findItem(R.id.item2).setTitle(Common.toLanguage("手繪簽名"));
         menu.findItem(R.id.item3).setTitle(Common.toLanguage("點擊審核"));
         menu.findItem(R.id.item4).setTitle(Common.toLanguage("不允許"));
 
@@ -317,19 +317,16 @@ public class LeaveAudit extends BaseActivity {
     }
 
     public static char[] bitmapToHex(Bitmap bitmap) {
-
         char[] result = null;
         ByteArrayOutputStream baos = null;
         try {
             if (bitmap != null) {
                 baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
                 baos.flush();
                 baos.close();
-
                 byte[] bitmapBytes = baos.toByteArray();
-                result = Hex.encodeHex(bitmapBytes);
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT).toCharArray();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -345,6 +342,8 @@ public class LeaveAudit extends BaseActivity {
         }
         return result;
     }
+
+
 
     void uploadPic() {
 
@@ -569,12 +568,12 @@ public class LeaveAudit extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item1:
-                uploadPic();
-                break;
-            case R.id.item2:
-                sign();
-                break;
+//            case R.id.item1:
+//                uploadPic();
+//                break;
+//            case R.id.item2:
+//                sign();
+//                break;
             case R.id.item3:
                 clickToCheck();
                 break;

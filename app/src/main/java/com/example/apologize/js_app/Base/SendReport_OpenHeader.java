@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import com.example.apologize.js_app.R;
+
+import com.example.namespace.R;
+//import com.example.apologize.js_app.R;
 
 public class SendReport_OpenHeader extends BaseActivity {
     private ListView listView;

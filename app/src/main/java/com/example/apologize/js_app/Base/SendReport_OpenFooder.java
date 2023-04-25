@@ -11,7 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.example.apologize.js_app.R;
+//import com.example.apologize.js_app.R;
+
+import com.example.namespace.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

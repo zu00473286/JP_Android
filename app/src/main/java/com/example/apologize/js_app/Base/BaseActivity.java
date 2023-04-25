@@ -7,8 +7,11 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import org.apache.commons.codec.binary.Hex;
 //import android.support.v7.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -18,16 +21,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.apologize.js_app.APP_JPMenu;
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+//import com.example.apologize.js_app.R;
 
 import org.apache.commons.codec.binary.Hex;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+
 
 /**
  * Created by Apologize on 2015/12/3.
@@ -39,7 +45,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // TODO Auto-generated method stub
+//         TODO Auto-generated method stub
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             if(getCurrentFocus()!=null && getCurrentFocus().getWindowToken()!=null){
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
@@ -68,9 +74,7 @@ public class BaseActivity extends AppCompatActivity {
             return false;
         }
     };
-
     public static char[] bitmapToHex(Bitmap bitmap) {
-
         char[] result = null;
         ByteArrayOutputStream baos = null;
         try {
@@ -78,18 +82,17 @@ public class BaseActivity extends AppCompatActivity {
                 baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 
-                baos.flush();
                 baos.close();
 
                 byte[] bitmapBytes = baos.toByteArray();
-                result = Hex.encodeHex(bitmapBytes);
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT).toCharArray();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 if (baos != null) {
-                    baos.flush();
                     baos.close();
                 }
             } catch (Exception e) {
@@ -98,6 +101,9 @@ public class BaseActivity extends AppCompatActivity {
         }
         return result;
     }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

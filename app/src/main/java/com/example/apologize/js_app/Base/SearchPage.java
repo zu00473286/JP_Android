@@ -14,7 +14,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import com.example.apologize.js_app.R;
+//import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;

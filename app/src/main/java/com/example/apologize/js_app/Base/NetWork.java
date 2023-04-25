@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+
+//import com.example.apologize.js_app.R;
 
 /**
  * Created by Apologize on 2015/12/3.

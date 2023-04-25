@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+
+//import com.example.apologize.js_app.R;
 
 /**
  * Created by wks5111 on 2017/4/20.

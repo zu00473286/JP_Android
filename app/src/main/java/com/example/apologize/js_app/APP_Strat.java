@@ -9,6 +9,10 @@ import android.util.Log;
 import com.example.apologize.js_app.Base.BaseActivity;
 import com.example.apologize.js_app.Base.Common;
 
+
+import com.example.namespace.R;
+
+
 public class APP_Strat extends BaseActivity {
 
     @Override

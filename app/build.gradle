@@ -5,28 +5,54 @@ android {
     compileSdkVersion 31
     defaultConfig {
         applicationId "com.apologize.jp_app"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         minSdkVersion 17
         targetSdkVersion 31
         versionCode 10
         versionName "2.0"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        namespace 'com.example.namespace'
+        useLibrary 'org.apache.http.legacy'
+
+        repositories {
+            // 其他存儲庫配置...
+
+            google()  // 添加 Google Maven 存儲庫
+            jcenter() // 添加 JCenter 存儲庫
         }
+        buildTypes {
+            customDebugType {
+                debuggable true
+                release {
+
+                    minifyEnabled false
+                    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                }
+            }
+        }
+    }
+
+    dependencies {
+        api fileTree(dir: 'libs', include: ['*.jar'])
+        implementation "androidx.work:work-runtime:2.7.1"
+        implementation 'androidx.appcompat:appcompat:1.0.2'
+        implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+        implementation 'cz.msebera.android:httpclient:4.4.1.1'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+        androidTestImplementation 'androidx.test:runner:1.4.0'
+        androidTestImplementation 'androidx.test.core:core:1.1.5'
+
+
+        api 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+        api 'com.google.zxing:core:3.2.1'
+        //api 'com.android.support:design:28.0.0'
+        api 'org.jsoup:jsoup:1.7.1'
+        api 'com.android.support.constraint:constraint-layout:1.0.2'
+        api 'junit:junit:4.12'
+        api 'net.danlew:android.joda:2.9.5'
     }
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.work:work-runtime:2.7.1"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    api 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
-    api 'com.google.zxing:core:3.2.1'
-    //api 'com.android.support:design:28.0.0'
-    api 'org.jsoup:jsoup:1.7.1'
-    api 'com.android.support.constraint:constraint-layout:1.0.2'
-    api 'junit:junit:4.12'
-    api 'net.danlew:android.joda:2.9.5'
+    implementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'org.testng:testng:6.9.6'
 }

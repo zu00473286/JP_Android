@@ -19,7 +19,8 @@ import com.example.apologize.js_app.Base.BaseActivity;
 import com.example.apologize.js_app.Base.Common;
 import com.example.apologize.js_app.Base.DBSearch;
 import com.example.apologize.js_app.Base.NetWork;
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+//import com.example.apologize.js_app.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

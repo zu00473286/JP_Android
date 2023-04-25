@@ -21,7 +21,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.apologize.js_app.R;
+//import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+
+import org.apache.commons.codec.binary.Hex;
 
 import java.io.IOException;
 import java.security.cert.TrustAnchor;
@@ -79,15 +82,14 @@ public class DrawBoard extends BaseActivity {
                 new Thread(new Runnable() {
                     Bitmap resizedBitmap;
                     Bitmap bitmap = null;
+
                     @Override
                     public void run() {
-
                         try {
                             bitmap = signDrawl.save();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                         //43670
                         int oldwidth = bitmap.getWidth();
                         int oldheight = bitmap.getHeight();
@@ -112,7 +114,8 @@ public class DrawBoard extends BaseActivity {
                                     dialog.dismiss();
                                 Intent i = new Intent();
                                 Bundle b = new Bundle();
-                                b.putCharArray("photo",bitmapToHex(resizedBitmap));
+                                String hexString = String.valueOf(bitmapToHex(resizedBitmap));
+                                b.putString("photo", hexString);
                                 i.putExtras(b);
                                 setResult(RESULT_OK,i);
                                 finish();
@@ -121,7 +124,6 @@ public class DrawBoard extends BaseActivity {
 
                     }
                 }).start();
-
             }
         });
     }

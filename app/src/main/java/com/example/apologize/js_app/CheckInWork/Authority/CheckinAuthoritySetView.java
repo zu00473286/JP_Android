@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import com.example.apologize.js_app.Base.BaseActivity;
 import com.example.apologize.js_app.Base.Common;
 import com.example.apologize.js_app.Base.DBSearch;
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+//import com.example.apologize.js_app.R;
 
 /**
  * Created by leo on 2018/2/25.

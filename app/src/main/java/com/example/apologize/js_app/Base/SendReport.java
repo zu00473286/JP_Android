@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.apologize.js_app.R;
+//import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
-import com.example.apologize.js_app.R;
+//import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

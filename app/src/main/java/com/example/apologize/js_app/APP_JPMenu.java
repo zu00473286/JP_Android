@@ -18,6 +18,7 @@ import com.example.apologize.js_app.CheckInWork.CheckInWorkMenu;
 import com.example.apologize.js_app.CheckInWork.Jiaban.JiabanMenu;
 import com.example.apologize.js_app.CheckInWork.Leave.LeaveMenu;
 import com.example.apologize.js_app.CheckInWork.PersonalAttendance.SearchCondition;
+import com.example.namespace.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,6 +120,7 @@ public class APP_JPMenu extends BaseActivity {
         dakaphoto_list = bundle.getStringArrayList("dakaphoto_list");
         Log.d("", String.valueOf(Common.needPhoto));
         dakalnglat_list = bundle.getStringArrayList("dakalnglat_list");
+
         findViewById(R.id.Sub3).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

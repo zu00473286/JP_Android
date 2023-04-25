@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.example.apologize.js_app.Base.BaseActivity;
 import com.example.apologize.js_app.Base.Common;
-import com.example.apologize.js_app.R;
-
+//import com.example.apologize.js_app.R;
+import com.example.namespace.R;
 public class SetCheckInButton extends BaseActivity {
     Switch 民國Switch,上班打卡Switch,下班打卡Switch,休息時間1起Switch,休息時間1終Switch,外出打卡Switch,歸來打卡Switch,加班上班Switch,加班下班Switch;
 

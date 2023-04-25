@@ -85,13 +85,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp">
+
                     <TextView
+                        android:id="@+id/l2"
+                        style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        style="@style/TextViewStyle"
-                        android:id="@+id/l2"
-                        android:text="員工編號:"/>
+                        android:text="員工姓名:" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -104,13 +105,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp">
+
                     <TextView
+                        android:id="@+id/l3"
+                        style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        style="@style/TextViewStyle"
-                        android:id="@+id/l3"
-                        android:text="員工編號:"/>
+                        android:text="加班類別:" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,13 +125,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp">
+
                     <TextView
+                        android:id="@+id/l4"
+                        style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        style="@style/TextViewStyle"
-                        android:id="@+id/l4"
-                        android:text="員工編號:"/>
+                        android:text="加班日期:" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -142,14 +145,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp">
+
                     <TextView
+                        android:id="@+id/l5"
+                        style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        style="@style/TextViewStyle"
-                        android:visibility="invisible"
-                        android:id="@+id/l5"
-                        android:text="員工編號:"/>
+                        android:text="時間起:"
+                        android:visibility="visible" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -162,13 +166,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp">
+
                     <TextView
+                        android:id="@+id/l6"
+                        style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        style="@style/TextViewStyle"
-                        android:id="@+id/l6"
-                        android:text="員工編號:"/>
+                        android:text="時間迄:" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -181,13 +186,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp">
+
                     <TextView
+                        android:id="@+id/l7"
+                        style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        style="@style/TextViewStyle"
-                        android:id="@+id/l7"
-                        android:text="員工編號:"/>
+                        android:text="加班事由:" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

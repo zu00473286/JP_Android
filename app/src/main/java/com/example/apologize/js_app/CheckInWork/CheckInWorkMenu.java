@@ -3,6 +3,10 @@ package com.example.apologize.js_app.CheckInWork;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +18,8 @@ import android.graphics.Matrix;
 import android.location.*;
 import android.net.Uri;
 import android.os.Bundle;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import android.os.Debug;
 import android.os.Environment;
 import android.os.Handler;
@@ -21,6 +27,8 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 //import android.support.v4.app.ActivityCompat;
 import androidx.core.app.ActivityCompat;
+
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +42,8 @@ import com.example.apologize.js_app.Base.Common;
 import com.example.apologize.js_app.Base.DBSearch;
 import com.example.apologize.js_app.Base.NetWork;
 import com.example.apologize.js_app.CheckInWork.Leave.LeaveAudit;
-import com.example.apologize.js_app.R;
+import com.example.namespace.R;
+//import com.example.apologize.js_app.R;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.http.NameValuePair;
@@ -47,18 +56,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CheckInWorkMenu extends BaseActivity {
     SharedPreferences sp;
-    ArrayList<String> employeid_list,employename_list,no_list,dakaphoto_list,dakalnglat_list;
-    int 年,月,日;
+    ArrayList<String> employeid_list, employename_list, no_list, dakaphoto_list, dakalnglat_list;
+    int 年, 月, 日;
     TextView yearmonthday;
     TextClock timeset;
     String time = "";
     Button Locate;
-    Button 上班打卡,下班打卡,休息時間1起,休息時間1終,加班上班,加班下班;
-    LinearLayout LocateLinearLayout,one,two,three,four;
+    Button 上班打卡, 下班打卡, 休息時間1起, 休息時間1終, 加班上班, 加班下班;
+    LinearLayout LocateLinearLayout, one, two, three, four;
     String lat = "", lng = "";
     Handler myHandler = new Handler();
     DBSearch SearchAttenddbSearch = new DBSearch();
@@ -100,8 +111,8 @@ public class CheckInWorkMenu extends BaseActivity {
         if (Common.needPhoto) {
             requestUserLocation();
         }
-        sp = getSharedPreferences("CheckIn",MODE_PRIVATE);
-        if (sp.getString("first","").equals("")) {
+        sp = getSharedPreferences("CheckIn", MODE_PRIVATE);
+        if (sp.getString("first", "").equals("")) {
             上班打卡.setVisibility(View.VISIBLE);
             下班打卡.setVisibility(View.VISIBLE);
             休息時間1起.setVisibility(View.VISIBLE);
@@ -126,29 +137,29 @@ public class CheckInWorkMenu extends BaseActivity {
             if (sp.getBoolean("民國TF", true) == true) {
                 if (月 >= 9) {
                     if (日 > 9) {
-                        yearmonthday.setText((年-1911)+"."+(月+1)+"."+日);
+                        yearmonthday.setText((年 - 1911) + "." + (月 + 1) + "." + 日);
                     } else {
-                        yearmonthday.setText((年-1911)+"."+(月+1)+".0"+日);
+                        yearmonthday.setText((年 - 1911) + "." + (月 + 1) + ".0" + 日);
                     }
                 } else {
                     if (日 > 9) {
-                        yearmonthday.setText((年-1911)+".0"+(月+1)+"."+日);
+                        yearmonthday.setText((年 - 1911) + ".0" + (月 + 1) + "." + 日);
                     } else {
-                        yearmonthday.setText((年-1911)+".0"+(月+1)+".0"+日);
+                        yearmonthday.setText((年 - 1911) + ".0" + (月 + 1) + ".0" + 日);
                     }
                 }
             } else {
                 if (月 >= 9) {
                     if (日 > 9) {
-                        yearmonthday.setText(年+"."+(月+1)+"."+日);
+                        yearmonthday.setText(年 + "." + (月 + 1) + "." + 日);
                     } else {
-                        yearmonthday.setText(年+"."+(月+1)+".0"+日);
+                        yearmonthday.setText(年 + "." + (月 + 1) + ".0" + 日);
                     }
                 } else {
                     if (日 > 9) {
-                        yearmonthday.setText(年+".0"+(月+1)+"."+日);
+                        yearmonthday.setText(年 + ".0" + (月 + 1) + "." + 日);
                     } else {
-                        yearmonthday.setText(年+".0"+(月+1)+".0"+日);
+                        yearmonthday.setText(年 + ".0" + (月 + 1) + ".0" + 日);
                     }
                 }
             }
@@ -226,14 +237,14 @@ public class CheckInWorkMenu extends BaseActivity {
     }
 
     void findviews() {
-        yearmonthday = (TextView)findViewById(R.id.yearmonthday);
-        timeset = (TextClock)findViewById(R.id.timeset);
+        yearmonthday = (TextView) findViewById(R.id.yearmonthday);
+        timeset = (TextClock) findViewById(R.id.timeset);
         Locate = (Button) findViewById(R.id.Locate);
-        LocateLinearLayout = (LinearLayout)findViewById(R.id.LocateLinearLayout);
-        one = (LinearLayout)findViewById(R.id.one);
-        two = (LinearLayout)findViewById(R.id.two);
-        three = (LinearLayout)findViewById(R.id.three);
-        four = (LinearLayout)findViewById(R.id.four);
+        LocateLinearLayout = (LinearLayout) findViewById(R.id.LocateLinearLayout);
+        one = (LinearLayout) findViewById(R.id.one);
+        two = (LinearLayout) findViewById(R.id.two);
+        three = (LinearLayout) findViewById(R.id.three);
+        four = (LinearLayout) findViewById(R.id.four);
         上班打卡 = (Button) findViewById(R.id.上班打卡);
         下班打卡 = (Button) findViewById(R.id.下班打卡);
         休息時間1起 = (Button) findViewById(R.id.休息時間1起);
@@ -254,7 +265,7 @@ public class CheckInWorkMenu extends BaseActivity {
         Log.d("heyCheckInWorkMeun", "dakaphoto_list:" + dakaphoto_list);
         Log.d("heyCheckInWorkMeun", "dakalnglat_list:" + dakalnglat_list);
 
-        if (dakalnglat_list.get(0).equals("False")){
+        if (dakalnglat_list.get(0).equals("False")) {
             Locate.setVisibility(View.INVISIBLE);
             LocateLinearLayout.setVisibility(View.INVISIBLE);
         }
@@ -266,15 +277,15 @@ public class CheckInWorkMenu extends BaseActivity {
 
         if (月 >= 9) {
             if (日 > 9) {
-                yearmonthday.setText(年+"."+(月+1)+"."+日);
+                yearmonthday.setText(年 + "." + (月 + 1) + "." + 日);
             } else {
-                yearmonthday.setText(年+"."+(月+1)+".0"+日);
+                yearmonthday.setText(年 + "." + (月 + 1) + ".0" + 日);
             }
         } else {
             if (日 > 9) {
-                yearmonthday.setText(年+".0"+(月+1)+"."+日);
+                yearmonthday.setText(年 + ".0" + (月 + 1) + "." + 日);
             } else {
-                yearmonthday.setText(年+".0"+(月+1)+".0"+日);
+                yearmonthday.setText(年 + ".0" + (月 + 1) + ".0" + 日);
             }
         }
         timeset.getFormat24Hour();
@@ -287,7 +298,7 @@ public class CheckInWorkMenu extends BaseActivity {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.gpssign)
                 .setTitle("現在位置")
-                .setMessage("<"+lat+","+lng+">")
+                .setMessage("<" + lat + "," + lng + ">")
                 .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -300,8 +311,8 @@ public class CheckInWorkMenu extends BaseActivity {
         boolean no = true;
         final LocationManager mLocation = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //判斷當前是否已經獲得了定位權限
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(CheckInWorkMenu.this,("無法存取位置權限"), Toast.LENGTH_SHORT).show();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(CheckInWorkMenu.this, ("無法存取位置權限"), Toast.LENGTH_SHORT).show();
 //            如果是6.0以上的去需求權限
             no = false;
         }
@@ -310,92 +321,92 @@ public class CheckInWorkMenu extends BaseActivity {
             return false;
 
         final List<String> permissionsList = new ArrayList<>();
-        if(this.checkSelfPermission(Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
+        if (this.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
             permissionsList.add(Manifest.permission.CAMERA);
-        if(this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
+        if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             permissionsList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        if(this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+        if (this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             permissionsList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+        if (this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             permissionsList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if(this.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))
-            this.requestPermissions(permissionsList.toArray(new String[permissionsList.size()]) , 0x00);
-        Log.d("size",permissionsList.size() + "");
-        if(permissionsList.size()>=1){
+        if (this.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))
+            this.requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 0x00);
+        Log.d("size", permissionsList.size() + "");
+        if (permissionsList.size() >= 1) {
             goToAppSetting();
             return false;
         }
 
         String key = "";
 
-        if(Common.needLocation){
+        if (Common.needLocation) {
             Location location = mLocation.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             key = LocationManager.GPS_PROVIDER;
-            if(location == null){
+            if (location == null) {
                 location = mLocation.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 key = LocationManager.NETWORK_PROVIDER;
             }
-            if(location != null){
-                try{
+            if (location != null) {
+                try {
                     lat = "" + Double.valueOf(location.getLatitude()).toString();
                     lng = "" + Double.valueOf(location.getLongitude()).toString();
-                }catch(NumberFormatException e){
-                    Log.d("error",e.getMessage());
+                } catch (NumberFormatException e) {
+                    Log.d("error", e.getMessage());
                     lat = "";
                     lng = "";
                 }
-                if(lat.length() > 0 && lng.length() > 0 && Common.latitude.length() > 0 && Common.longitude.length() > 0){
+                if (lat.length() > 0 && lng.length() > 0 && Common.latitude.length() > 0 && Common.longitude.length() > 0) {
 
                     float results[] = new float[1];
 
-                    try{
+                    try {
 
-                        Double latitude,longtitude,comLatitude,comLongtitude;
+                        Double latitude, longtitude, comLatitude, comLongtitude;
                         latitude = Double.valueOf(lat);
                         longtitude = Double.valueOf(lng);
                         comLatitude = Double.valueOf(Common.latitude);
                         comLongtitude = Double.valueOf(Common.longitude);
                         Location.distanceBetween(comLatitude, comLongtitude, latitude, longtitude, results);
                         distance = NumberFormat.getInstance().format(results[0]);
-                        ((Button) findViewById(R.id.Locate)).setText(("距離公司還有")+distance+"m");
-                    }catch(NumberFormatException e){
-                        Log.d("error",e.getMessage());
+                        ((Button) findViewById(R.id.Locate)).setText(("距離公司還有") + distance + "m");
+                    } catch (NumberFormatException e) {
+                        Log.d("error", e.getMessage());
                         distance = "";
                     }
 
                 }
-            }else{
+            } else {
                 lat = "";
                 lng = "";
             }
 
-            mLocation.requestLocationUpdates(key,1,1, new LocationListener() {
+            mLocation.requestLocationUpdates(key, 1, 1, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    try{
+                    try {
                         lat = "" + Double.valueOf(location.getLatitude()).toString();
                         lng = "" + Double.valueOf(location.getLongitude()).toString();
-                    }catch(NumberFormatException e){
-                        Log.d("error",e.getMessage());
+                    } catch (NumberFormatException e) {
+                        Log.d("error", e.getMessage());
                         lat = "";
                         lng = "";
                     }
-                    if(lat.length() > 0 && lng.length() > 0 && Common.latitude.length() > 0 && Common.longitude.length() > 0){
+                    if (lat.length() > 0 && lng.length() > 0 && Common.latitude.length() > 0 && Common.longitude.length() > 0) {
 
                         float results[] = new float[1];
 
-                        try{
+                        try {
 
-                            Double latitude,longtitude,comLatitude,comLongtitude;
+                            Double latitude, longtitude, comLatitude, comLongtitude;
                             latitude = Double.valueOf(lat);
                             longtitude = Double.valueOf(lng);
                             comLatitude = Double.valueOf(Common.latitude);
                             comLongtitude = Double.valueOf(Common.longitude);
                             Location.distanceBetween(comLatitude, comLongtitude, latitude, longtitude, results);
                             distance = NumberFormat.getInstance().format(results[0]);
-                            ((Button) findViewById(R.id.Locate)).setText(("距離公司還有")+distance+"m");
-                        }catch(NumberFormatException e){
-                            Log.d("error",e.getMessage());
+                            ((Button) findViewById(R.id.Locate)).setText(("距離公司還有") + distance + "m");
+                        } catch (NumberFormatException e) {
+                            Log.d("error", e.getMessage());
                             distance = "";
                         }
                     }
@@ -408,47 +419,46 @@ public class CheckInWorkMenu extends BaseActivity {
 
                 @Override
                 public void onProviderEnabled(String provider) {
-                    Log.d("enable","enable");
+                    Log.d("enable", "enable");
                 }
 
                 @Override
                 public void onProviderDisabled(String provider) {
-                    Log.d("enable","disable");
+                    Log.d("enable", "disable");
 
                 }
             }, CheckInWorkMenu.this.getMainLooper());
         }
 
 
+        if (Common.needLocation && Common.needPhoto) {
 
-        if(Common.needLocation && Common.needPhoto){
-
-            if(lat.equals("") || lng.equals("")){
+            if (lat.equals("") || lng.equals("")) {
                 ToastError(("請開啟GPS定位"));
                 return false;
             }
 
             return no;
-        }else if(Common.needLocation){
+        } else if (Common.needLocation) {
 
-            if(lat.equals("") || lng.equals("")){
+            if (lat.equals("") || lng.equals("")) {
                 ToastError("請開啟GPS定位");
                 return false;
             }
 
             return no;
-        }else if(Common.needPhoto){
+        } else if (Common.needPhoto) {
             return true;
-        }else{
+        } else {
             return true;
         }
 
     }
 
-    private void goToAppSetting(){
+    private void goToAppSetting() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                 Uri.fromParts("package", this.getPackageName(), null));
-        startActivityForResult(intent , 0x00);
+        startActivityForResult(intent, 0x00);
     }
 
     boolean searchattend() {
@@ -458,25 +468,25 @@ public class CheckInWorkMenu extends BaseActivity {
         SearchAttenddbSearch.PutParameter("account", employeid_list.get(0));
         if (月 >= 9) {
             if (日 > 9) {
-                ndDate = String.valueOf((年-1911))+(月+1)+日+"";
+                ndDate = String.valueOf((年 - 1911)) + (月 + 1) + 日 + "";
             } else {
-                ndDate = String.valueOf((年-1911))+(月+1)+"0"+日;
+                ndDate = String.valueOf((年 - 1911)) + (月 + 1) + "0" + 日;
             }
         } else {
             if (日 > 9) {
-                ndDate = String.valueOf((年-1911))+"0"+(月+1)+日;
+                ndDate = String.valueOf((年 - 1911)) + "0" + (月 + 1) + 日;
             } else {
-                ndDate = String.valueOf((年-1911))+"0"+(月+1)+"0"+日;
+                ndDate = String.valueOf((年 - 1911)) + "0" + (月 + 1) + "0" + 日;
             }
         }
         SearchAttenddbSearch.PutParameter("date", ndDate);
 
-        Log.d("年",String.valueOf(年));
-        Log.d("月",String.valueOf(月));
-        Log.d("日",String.valueOf(日));
-        Log.d("message",SearchAttenddbSearch.returnParameter().toString());
+        Log.d("年", String.valueOf(年));
+        Log.d("月", String.valueOf(月));
+        Log.d("日", String.valueOf(日));
+        Log.d("message", SearchAttenddbSearch.returnParameter().toString());
 
-        if(SearchAttenddbSearch.JPSearchForGet(searchattendstr) == DBSearch.Result.fund) {
+        if (SearchAttenddbSearch.JPSearchForGet(searchattendstr) == DBSearch.Result.fund) {
             TF = true;
         } else {
             TF = false;
@@ -484,70 +494,65 @@ public class CheckInWorkMenu extends BaseActivity {
         Log.d("heyCheckInWorkMeun", "searchattendTF:" + TF);
         return TF;
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && data != null){
-
-            try{
+        if (requestCode == 1 && data != null) {
+            try {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-                //43670
-                int oldwidth = photo.getWidth();
-                int oldheight = photo.getHeight();
+                int oldWidth = photo.getWidth();
+                int oldHeight = photo.getHeight();
                 double scaleWidth = 1.1;
                 double scaleHeight = 1.1;
-                do{
+                boolean isSuccessful = false;
+
+                while (!isSuccessful && bitmapToHex(photo).length > 43670) {
                     scaleWidth -= 0.1;
                     scaleHeight -= 0.1;
                     Matrix matrix = new Matrix();
-                    matrix.postScale((float)scaleWidth, (float)scaleHeight);
+                    matrix.postScale((float) scaleWidth, (float) scaleHeight);
+                    Log.d("doint", "create the new Bitmap object");
+                    Bitmap resizedBitmap = Bitmap.createBitmap(photo, 0, 0, oldWidth, oldHeight, matrix, true);
+                    String base64Image = String.valueOf(bitmapToHex(resizedBitmap));
+                    isSuccessful = insertgpsinfo(base64Image);
+                }
 
-                    Log.d("doint","create the new Bitmap object");
-                    // create the new Bitmap object
-                    resizedBitmap = Bitmap.createBitmap(photo, 0, 0, oldwidth,
-                            oldheight, matrix, true);
-                }while(bitmapToHex(resizedBitmap).length > 43670);
-
-                insertgpsinfo(String.copyValueOf(LeaveAudit.bitmapToHex(resizedBitmap)));
-
-            }catch(Exception e){
-                Log.d("error",e.getMessage());
+                if (!isSuccessful) {
+                    ToastError("打卡失敗");
+                }
+            } catch (Exception e) {
+                Log.d("error", e.getMessage());
                 ToastError("打卡失敗");
             }
-
         }
     }
-
-    void uploadPic(){
-
+    void uploadPic() {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
-
-
     }
 
-    void  insertgpsinfo(String bitmap){
-
+    boolean insertgpsinfo(String base64Image) {
+        boolean isSuccessful = false;
         final String insertgpsinfostr = "INSERT INTO [GpsInfo]([ndDate],[ndDate2],[dakatime],[employeid],[employeno],[employename],[discern],[longitude],[latitude],[checkrange],[photo])" +
-                "VALUES(@ndDate,@ndDate2,@dakatime,@employeid,@employeno,@employename,@discern,@longitude,@latitude,@checkrange,";
+                "VALUES(@ndDate,@ndDate2,@dakatime,@employeid,@employeno,@employename,@discern,@longitude,@latitude,@checkrange,@photo)";
         boolean TF;
+        // Populate the params map with key-value pairs
         if (月 >= 9) {
             if (日 > 9) {
-                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年-1911))+(月+1)+日);
-                InsertGpsIfodbSearch.PutParameter("ndDate2", 年+(月+1)+日);
+                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年 - 1911)) + (月 + 1) + 日);
+                InsertGpsIfodbSearch.PutParameter("ndDate2", 年 + (月 + 1) + 日);
             } else {
-                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年-1911))+(月+1)+"0"+日);
-                InsertGpsIfodbSearch.PutParameter("ndDate2", 年+(月+1)+"0"+日);
+                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年 - 1911)) + (月 + 1) + "0" + 日);
+                InsertGpsIfodbSearch.PutParameter("ndDate2", 年 + (月 + 1) + "0" + 日);
             }
         } else {
             if (日 > 9) {
-                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年-1911))+"0"+(月+1)+日);
-                InsertGpsIfodbSearch.PutParameter("ndDate2", 年+"0"+(月+1)+日);
+                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年 - 1911)) + "0" + (月 + 1) + 日);
+                InsertGpsIfodbSearch.PutParameter("ndDate2", 年 + "0" + (月 + 1) + 日);
             } else {
-                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年-1911))+"0"+(月+1)+"0"+日);
-                InsertGpsIfodbSearch.PutParameter("ndDate2", 年+"0"+(月+1)+"0"+日);
+                InsertGpsIfodbSearch.PutParameter("ndDate", String.valueOf((年 - 1911)) + "0" + (月 + 1) + "0" + 日);
+                InsertGpsIfodbSearch.PutParameter("ndDate2", 年 + "0" + (月 + 1) + "0" + 日);
             }
         }
         InsertGpsIfodbSearch.PutParameter("dakatime", time);
@@ -557,7 +562,7 @@ public class CheckInWorkMenu extends BaseActivity {
         if (Common.needLocation) {
             InsertGpsIfodbSearch.PutParameter("longitude", lng);
             InsertGpsIfodbSearch.PutParameter("latitude", lat);
-            if (Double.parseDouble(distance.replace(",","")) < Double.parseDouble(Common.checkrange)) {
+            if (Double.parseDouble(distance.replace(",", "")) < Double.parseDouble(Common.checkrange)) {
                 InsertGpsIfodbSearch.PutParameter("checkrange", "true");
             } else {
                 InsertGpsIfodbSearch.PutParameter("checkrange", "false");
@@ -568,20 +573,22 @@ public class CheckInWorkMenu extends BaseActivity {
             InsertGpsIfodbSearch.PutParameter("checkrange", "false");
         }
 
-
         final ArrayList<NameValuePair> list = new ArrayList<>();
-        list.add(new BasicNameValuePair("photo","0x" + bitmap));
+        list.add(new BasicNameValuePair("photo", "0x" + base64Image));
+
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                InsertGpsIfodbSearch.PostToCheckin(insertgpsinfostr,list);
-
+                InsertGpsIfodbSearch.PostToCheckin(insertgpsinfostr, list);
                 updateattend();
             }
-        }).start();
 
+        }).start();
+        isSuccessful = true;
+        return isSuccessful;
     }
+
 
     void updateattend() {
         final boolean TF;
@@ -684,7 +691,7 @@ public class CheckInWorkMenu extends BaseActivity {
         SimpleDateFormat df = new SimpleDateFormat("HHmm");
         time = df.format(mCalendar.getTime());
         requestUserLocation();
-        if(!NetWork.CheckNetWorkState(this))return;
+        if (!NetWork.CheckNetWorkState(this)) return;
 
         dialog = new ProgressDialog(this);
         dialog = ProgressDialog.show(this, "儲存打卡資訊中", "請稍候...");
@@ -712,7 +719,7 @@ public class CheckInWorkMenu extends BaseActivity {
         }).start();
     }
 
-    public void onOfftimeD(View view) {
+        public void onOfftimeD(View view) {
         Calendar mCalendar = new GregorianCalendar();
         SimpleDateFormat df = new SimpleDateFormat("HHmm");
         time = df.format(mCalendar.getTime());
@@ -752,7 +759,7 @@ public class CheckInWorkMenu extends BaseActivity {
         SimpleDateFormat df = new SimpleDateFormat("HHmm");
         time = df.format(mCalendar.getTime());
         requestUserLocation();
-        if(!NetWork.CheckNetWorkState(this))return;
+        if (!NetWork.CheckNetWorkState(this)) return;
 
         dialog = new ProgressDialog(this);
         dialog = ProgressDialog.show(this, "儲存打卡資訊中", "請稍候...");
@@ -780,8 +787,7 @@ public class CheckInWorkMenu extends BaseActivity {
             }
         }).start();
     }
-
-    public void onRestime2D(View view) {
+        public void onRestime2D(View view) {
         Calendar mCalendar = new GregorianCalendar();
         SimpleDateFormat df = new SimpleDateFormat("HHmm");
         time = df.format(mCalendar.getTime());
@@ -852,7 +858,7 @@ public class CheckInWorkMenu extends BaseActivity {
         SimpleDateFormat df = new SimpleDateFormat("HHmm");
         time = df.format(mCalendar.getTime());
         requestUserLocation();
-        if(!NetWork.CheckNetWorkState(this))return;
+        if (!NetWork.CheckNetWorkState(this)) return;
 
         dialog = new ProgressDialog(this);
         dialog = ProgressDialog.show(this, "儲存打卡資訊中", "請稍候...");
@@ -885,5 +891,4 @@ public class CheckInWorkMenu extends BaseActivity {
         sp.edit().putString("first", "nofirst").commit();
         startActivity(intent);
     }
-
 }
